@@ -1,0 +1,13 @@
+---
+
+- hosts: '{{ hosts }}'
+  become: true
+  become_user: root
+  roles:
+    - base
+  tasks:
+  - include: tasks/prepare_pc_enablemane.yml
+
+  - name: print stdout
+    debug:
+      msg: "{{ result.stdout }}"

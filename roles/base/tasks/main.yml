@@ -1,0 +1,19 @@
+---
+
+- name: install core packages
+    apt:
+        name: '{{ item.name }}'
+        state: '{{ item.state | default("present") }}'
+        purge: yes
+
+    with_items:
+        - name: git
+        - name: vim
+        - name: tmux
+        - name: zsh
+        - name: htop
+        - name: yadm
+
+#- name: prepare system settings.
+#    
+

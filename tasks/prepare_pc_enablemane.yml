@@ -1,0 +1,10 @@
+---
+
+- name: add pc-tools ppa
+    apt_repository:
+        repo: 'ppa:alextu/pc-tools'
+
+- name: install pc-enablement-tools
+    apt:
+        name: pc-enablement-tools
+        state: present
