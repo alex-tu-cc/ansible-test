@@ -1,0 +1,75 @@
+---
+- name: copy bash settings and history
+  synchronize:
+    src: "{{lookup('env','HOME')}}/{{item}}"
+    dest: "{{lookup('env','HOME')}}/"
+  with_items:
+    - ".bashrc"
+    - ".bash.d"
+    - ".bash_history"
+    - ".zsh_history"
+
+- name: copy ~/bin
+  synchronize:
+    src: "{{lookup('env','HOME')}}/bin"
+    dest: "/home/{{ansible_ssh_user}}/"
+
+- name: copy system credentials
+  become: yes
+  synchronize:
+    src: "/etc/apt/sources.list.d"
+    dest: "/etc/apt/"
+
+- name: import all keys
+  become: yes
+  shell: for i in `sudo apt-get update | grep NO_PUBKEY | awk '{print $15}'`; do echo "import $i"; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $i; done
+  register: import_all_keys
+
+- debug: msg="{{import_all_keys}}"
+
+- name: install packages for private usage
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+    - rclone
+    state: present
+
+- name: prepare rclone
+  file:
+    path: /home/{{ansible_ssh_user}}/.config/rclone
+    state: directory
+
+- name: copy user credentials
+  copy:
+    src: "{{lookup('env','HOME')}}/{{item}}"
+    dest: "/home/{{ansible_ssh_user}}/{{item}}"
+  with_items:
+    - ".bazaar"
+    - ".config/rclone/rclone.conf"
+
+- name: install projects packages
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+    - davfs2
+    - lp-fish-tools
+    - lftp
+    state: present
+
+- name: copy projects stuff
+  become: yes
+  synchronize:
+    src: "{{item}}"
+    dest: "{{item}}"
+  with_items:
+    - "/etc/davfs2/secrets"
+    - "/etc/davfs2/davfs2.conf"
+    - "/etc/fstab"
+
+- name: copy .ssh
+  synchronize:
+    src: "{{lookup('env','HOME')}}/.ssh"
+    dest: "{{lookup('env','HOME')}}/"
+

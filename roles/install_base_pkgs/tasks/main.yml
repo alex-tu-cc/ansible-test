@@ -1,0 +1,94 @@
+---
+# I leave creating user and their ssh key to role:singleplatform-eng.users
+- name: install core packages
+  become: yes
+  apt:
+    update_cache: yes
+    name: '{{ item.name }}'
+    state: '{{ item.state | default("present") }}'
+
+  with_items:
+    - name: git
+    - name: vim
+    - name: exuberant-ctags
+    - name: tmux
+    - name: zsh
+    - name: htop
+    - name: bats
+    - name: yadm
+    - name: powertop
+    - name: rsync
+    - name: python3-pip
+
+- name: get oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: ~/.oh-my-zsh
+
+- name: chagne defautl shell to zsh
+  become: yes
+  shell: chsh -s $(which zsh) "{{ansible_ssh_user}}"
+  register: chsh
+
+- debug: var=chsh.stdout_lines
+- debug: msg="{{ chsh.stdout}}"
+- debug: msg="{{ chsh.stderr}}"
+
+- name: configure git, tmux, vim, zsh
+  synchronize:
+    src: "{{lookup('env','HOME')}}/{{item}}"
+    dest: "/home/{{ansible_ssh_user}}/"
+  with_items:
+    - ".gitconfig"
+    - ".bazaar"
+    - ".tmux.conf"
+    - ".vim"
+    - ".vimrc"
+    - ".zshrc"
+
+# it's only support python2, postpone it.
+#- name: vim - configure YCM-Generator
+#  shell: ./config_gen.py >> "{{lookup('env','HOME')}}"/YCM-Generator.log
+#  args:
+#    chdir: "{{lookup('env','HOME')}}/.vim/bundle/YCM-Generator"
+
+- name: vim - install YouCompleteMe dependencies
+  become: yes
+  apt:
+    update_cache: yes
+    name: '{{ item.name }}'
+    state: '{{ item.state | default("present") }}'
+  with_items:
+    - name: build-essential
+    - name: cmake
+    - name: python3-dev
+    - name: python-dev
+
+# get build error, postpone it.
+- name: vim - set YouCompleteMe
+  shell: python3 ./install.py >> "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
+  args:
+    chdir: "/home/{{ansible_ssh_user}}/.vim/bundle/YouCompleteMe"
+
+# https://github.com/ansible/ansible/issues/20769
+#  become: "no"
+#  become_user: "{{lookup('env','USER')}}"
+#  set_remote_user: "no"
+#  remote_user: "alextu"
+#  private_key: "~/.ssh/id_rsa"
+#- name: config vim
+#  synchronize:
+#    src: "{{lookup('env','HOME')}}/{{item.name}}"
+#    dest: "{{lookup('env','HOME')}}/{{item.name}}"
+#  with_items:
+#    - ".vim"
+#    - ".vimrc"
+#- name: config tmux
+#  copy:
+#    src: "{{lookup('env','HOME')}}/.tmux.conf"
+#    dest: "{{lookup('env','HOME')}}/.tmux.conf"
+#- name: config tmux
+#- name: config zsh
+#- name: prepare system settings.
+#    
+

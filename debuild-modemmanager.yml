@@ -1,0 +1,14 @@
+---
+
+- hosts: node1
+  become: true
+  become_method: sudo
+  roles:
+    - base
+    - build_pkg
+  tasks:
+  - include: tasks/build_modemmanager.yml
+
+#  - name: print stdout
+#    debug:
+#      msg: "{{ result.stdout }}"

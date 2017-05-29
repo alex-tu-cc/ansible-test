@@ -1,0 +1,43 @@
+---
+- name: install personal packages
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+        - tlp
+        - chromium-browser
+        - gdebi
+        - flameshot
+#https://itsfoss.com/shutter-edit-button-disabled/
+        - shutter
+        - im-config
+        - tree
+        - ansible
+    state: present
+
+
+- name: download google chrome
+  get_url:
+    url:  https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    dest: "/tmp/"
+
+- name: install google chrome
+  become: yes
+  shell: gdebi -n /tmp/google-chrome-stable_current_amd64.deb
+
+- name: install docker ce
+  include_tasks: ubuntu-ansible-docker-install.yml
+
+- name: install language support for zh and set default ims as fcitx
+  become: yes
+  shell: yes | apt install $(check-language-support -l zh) && im-config -n fcitx
+  register: install
+
+- debug: msg="{{install.stdout}}"
+
+- name: install language support completely
+  become: yes
+  shell: yes | apt install $(check-language-support)
+  register: install
+
+- debug: msg="{{install}}"

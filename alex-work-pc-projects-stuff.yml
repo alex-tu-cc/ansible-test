@@ -1,0 +1,41 @@
+---
+# this play book is target to machines which already have ssh server be installed,
+# and ssh key is there.
+#- debug: msg="break security temporally"
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: chmod
+      become: yes
+      shell: chmod 644 /etc/davfs2/secrets
+
+- hosts: all
+  vars:
+    local_ssh_pub_key: "{{ lookup('env','HOME') }}/.ssh/id_rsa.pub"
+    ansible_python_interpreter: /usr/bin/python3
+
+   - name: copy projects stuff - prepare
+     become: yes
+     shell: chown "{{ansible_ssh_user}}":"{{ansible_ssh_user}}" /srv -R && mkdir /srv/iso
+
+   - name: copy projects stuff
+     synchronize:
+       src: "{{item}}"
+       dest: "{{item}}"
+     with_items:
+       - "/home/{{ansible_ssh_user}}/workspace"
+       - "/srv/git"
+       - "/srv/iso/base"
+       - "/srv/iso/ubuntu"
+
+  roles:
+    - role: copy_private_data
+
+#- debug: msg="recover security temporally"
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: chmod
+      become: yes
+      shell: chmod 660 /etc/davfs2/secrets
+

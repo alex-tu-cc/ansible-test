@@ -1,0 +1,10 @@
+---
+
+- name: install modemmanager build dependencies
+  apt:
+      name: libmbim-glib4
+      state: build-dep
+      name: libqmi-glib1
+      state: build-dep
+      name: modemmanager
+      state: build-dep
