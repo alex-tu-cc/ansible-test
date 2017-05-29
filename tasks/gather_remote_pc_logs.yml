@@ -1,0 +1,7 @@
+---
+
+- name: triger collect_log.sh to gather logs
+    become: true
+    become_method: sudo
+    shell: collect_log.sh
+
