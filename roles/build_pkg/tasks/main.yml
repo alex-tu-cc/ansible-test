@@ -1,14 +1,14 @@
 ---
 
 - name: install common packages which needed by building packages.
-    apt:
-        name: '{{ item.name }}'
-        state: '{{ item.state | default("present") }}'
-        purge: yes
+  apt:
+      name: '{{ item.name }}'
+      state: '{{ item.state | default("present") }}'
+      purge: yes
 
-    with_items:
-        - name: gcc
-        - name: devscripts
-        - name: equivs
-        - name: pkg-create-dbgsym
+  with_items:
+      - name: gcc
+      - name: devscripts
+      - name: equivs
+      - name: pkg-create-dbgsym
 

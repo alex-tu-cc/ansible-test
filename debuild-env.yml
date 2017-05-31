@@ -1,13 +1,14 @@
 ---
 
-- name: say 'hello world'
-  hosts: all
-  tasks:
+- hosts: node1
+  become: true
+  become_method: sudo
+  roles:
+    - base
+    - build_pkg
+#  tasks:
+#  - include: tasks/prepare_pc_enablemane.yml
 
-    - name: echo 'hello world'
-      command: echo 'hello world'
-      register: result
-
-    - name: print stdout
-      debug:
-        msg: "{{ result.stdout }}"
+#  - name: print stdout
+#    debug:
+#      msg: "{{ result.stdout }}"

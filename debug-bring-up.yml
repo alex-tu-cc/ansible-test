@@ -1,6 +1,6 @@
 ---
 
-- hosts: server1
+- hosts: node1
   become: true
   become_method: sudo
   roles:
@@ -8,6 +8,6 @@
   tasks:
   - include: tasks/prepare_pc_enablemane.yml
 
-  - name: print stdout
-    debug:
-      msg: "{{ result.stdout }}"
+#  - name: print stdout
+#    debug:
+#      msg: "{{ result.stdout }}"
