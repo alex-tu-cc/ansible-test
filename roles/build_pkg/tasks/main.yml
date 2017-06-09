@@ -11,4 +11,5 @@
       - name: devscripts
       - name: equivs
       - name: pkg-create-dbgsym
+      - name: ccache
 
