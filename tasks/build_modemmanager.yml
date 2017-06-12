@@ -1,10 +1,11 @@
 ---
 
 - name: enable apt-source
-  shell: series=$(grep DISTRIB_CODENAME /etc/lsb-release | cut -d'=' -f2); grep  "deb-src .* $series main restricted" /etc/apt/sources.list | sed 's/#//g' > /etc/apt/sources.list.d/$series-main-restrict-src.list
+  shell: series=$(grep DISTRIB_CODENAME /etc/lsb-release | cut -d'=' -f2); sed -i "s/#.*\(deb-src.*$series main restricted\)/\1/g" /etc/apt/sources.list
 
 - name: install modemmanager build dependencies
   apt:
+      update_cache: yes
       name: libmbim-glib4
       state: build-dep
       name: libqmi-glib1
