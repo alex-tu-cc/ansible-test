@@ -1,19 +1,47 @@
 ---
-
-- name: install core packages
-  apt:
-    name: '{{ item.name }}'
-    state: '{{ item.state | default("present") }}'
-    purge: yes
-
-  with_items:
-    - name: git
-    - name: vim
-    - name: tmux
-    - name: zsh
-    - name: htop
+# I leave creating user and their ssh key to role:singleplatform-eng.users
+#- name: install core packages
+#  apt:
+##    update_cache: yes
+#    name: '{{ item.name }}'
+#    state: '{{ item.state | default("present") }}'
+#
+#  with_items:
+#    - name: git
+#    - name: vim
+#    - name: tmux
+##    - name: zsh
+#    - name: htop
 #    - name: yadm
 
+- name: config git, tmux, vim
+  synchronize:
+    src: "{{lookup('env','HOME')}}/{{item}}"
+    dest: "{{lookup('env','HOME')}}/{{item}}"
+  with_items:
+    - ".gitconfig"
+#    - ".tmux.conf"
+#    - ".vim"
+#    - ".vimrc"
+# https://github.com/ansible/ansible/issues/20769
+  become: "no"
+#  become_user: "{{lookup('env','USER')}}"
+#  set_remote_user: "no"
+  remote_user: "alextu"
+  private_key: "~/.ssh/id_rsa"
+#- name: config vim
+#  synchronize:
+#    src: "{{lookup('env','HOME')}}/{{item.name}}"
+#    dest: "{{lookup('env','HOME')}}/{{item.name}}"
+#  with_items:
+#    - ".vim"
+#    - ".vimrc"
+- name: config tmux
+  copy:
+    src: "{{lookup('env','HOME')}}/.tmux.conf"
+    dest: "{{lookup('env','HOME')}}/.tmux.conf"
+#- name: config tmux
+#- name: config zsh
 #- name: prepare system settings.
 #    
 
