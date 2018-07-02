@@ -1,0 +1,48 @@
+---
+# this play book is target to machines which already have ssh server be installed,
+# and ssh key is there.
+- hosts: node1
+  become: true
+  become_method: sudo
+  vars:
+    local_ssh_pub_key: "{{ lookup('env','HOME') }}/.ssh/id_rsa.pub"
+
+  tasks:
+    - debug:
+        msg: "System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"
+
+    - debug:
+        msg: "{{ local_ssh_pub_key }}"
+    - debug:
+        msg: "{{ lookup('config', 'DEFAULT_LOOKUP_PLUGIN_PATH') }}"
+#    - debug:
+#        msg: "{{ hostvars[inventory_hostname] }}"
+
+  roles:
+    - base
+    # install vim
+#    - trombik.vim
+#
+#    # set my public key to /etc/ssh/authorized_keys/root
+#    # need make sure the configuration has been set:
+#    # # /etc/ssh/sshd_config
+#    # AuthorizedKeysFile /etc/ssh/authorized_keys/%u %h/.ssh/authorized_keys
+#    # https://goo.gl/8ofvpn
+##    - role: debops.authorized_keys
+##      authorized_keys__list:
+##           name: 'root'
+##           sshkeys: ["{{ lookup('file',lookup('env','HOME')+'/.ssh/id_rsa.pub') }}"]
+#
+#    # add user which same as the one executing this playbook. "{{lookup('env','USER')}}"
+#    - role: singleplatform-eng.users
+#      users:
+#      - username: "{{lookup('env','USER')}}"
+#        ssh_key:
+#        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCi9VdlhUUbRALkP/c0nTuANkDRbNZHf9ZiVrx9Pr94JbXMR/y030oYhmsyUGXROYEDJmVkZpLija22flqjFXuxmcYYbuh27ij3d00SSAo7oRQRMG1CSh5HhZyizVFf54mtqbYrPbih0ZTzEDDvlMKyTdy1n7s5ggUa7QXhwiSb5FiqOuR2ri1dkpFowagn962HLBXXbN7TKmbXevRxvBBZaTOSp92+7njOMV4uSPMvFZJowfL38kPl5kDDwYfthbzgf+HNOlmuv+/kkALKbCnGD3mlIziu/9Aw5tdkGceTRPV7H0FDBhp+PS96s3OWONFnKHbqw/CHVmlqe9WQX9Rz alextu@alextu-pc"
+
+
+
+
+
+
+

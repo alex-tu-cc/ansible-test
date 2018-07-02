@@ -17,12 +17,12 @@
 - name: config git, tmux, vim
   synchronize:
     src: "{{lookup('env','HOME')}}/{{item}}"
-    dest: "{{lookup('env','HOME')}}/{{item}}"
+    dest: "{{lookup('env','HOME')}}/"
   with_items:
     - ".gitconfig"
-#    - ".tmux.conf"
-#    - ".vim"
-#    - ".vimrc"
+    - ".tmux.conf"
+    - ".vim"
+    - ".vimrc"
 # https://github.com/ansible/ansible/issues/20769
   become: "no"
 #  become_user: "{{lookup('env','USER')}}"
