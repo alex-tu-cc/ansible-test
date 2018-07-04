@@ -1,13 +1,18 @@
 ---
 
-- hosts: node1
+- hosts: node3
   become: true
   become_method: sudo
+  vars:
+    local_ssh_pub_key: "{{ lookup('env','HOME') }}/.ssh/id_rsa.pub"
   roles:
+    # add user which same as the one executing this playbook. "{{lookup('env','USER')}}"
+    - role: singleplatform-eng.users
+      users:
+      - username: "{{lookup('env','USER')}}"
+        ssh_key:
+        - "{{ lookup('file',lookup('env','HOME')+'/.ssh/id_rsa.pub') }}"
     - base
   tasks:
   - include: tasks/prepare_pc_enablemane.yml
-
-#  - name: print stdout
-#    debug:
-#      msg: "{{ result.stdout }}"
+  - include: tasks/gather_remote_pc_logs.yml

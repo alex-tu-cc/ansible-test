@@ -19,6 +19,12 @@
 #        msg: "{{ hostvars[inventory_hostname] }}"
 
   roles:
+    # add user which same as the one executing this playbook. "{{lookup('env','USER')}}"
+    - role: singleplatform-eng.users
+      users:
+      - username: "{{lookup('env','USER')}}"
+        ssh_key:
+        - "{{ lookup('file',lookup('env','HOME')+'/.ssh/id_rsa.pub') }}"
     - base
     # install vim
 #    - trombik.vim

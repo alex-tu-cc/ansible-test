@@ -3,8 +3,13 @@
 - name: add pc-tools ppa
   apt_repository:
       repo: 'ppa:alextu/pc-tools'
+      codename: "{{ ansible_lsb.codename }}"
 
 - name: install pc-enablement-tools
   apt:
-      name: pc-enablement-tools
+      name: "{{item}}"
       state: present
+  with_items:
+    - pc-enablement-tools
+    - debug-logs-collector
+    - reboot-check

@@ -1,7 +1,25 @@
 ---
+- debug:
+   msg: "{{ansible_env.HOME}}"
+- debug:
+   msg: "{{ansible_hostname}}"
 
-- name: triger collect_log.sh to gather logs
-    become: true
-    become_method: sudo
-    shell: collect_log.sh
+#- name: triger collect_log.sh to gather logs
+#  become: "yes"
+#  become_method: sudo
+#  become_flags: '-E'
+#  shell: "collect-logs.sh -p /tmp/collect-logs"
 
+- name: chown the log folder
+  become: "yes"
+  become_method: sudo
+  shell: "chown 1000.1000 -R /tmp/collect-logs"
+
+- name: transfer back logs
+  become: 'no'
+  remote_user: "alextu"
+  private_key: "~/.ssh/id_rsa"
+  synchronize:
+   mode: pull
+   src: "{{ansible_env.HOME}}/collect-logs"
+   dest: "/tmp/{{ansible_hostname}}"
