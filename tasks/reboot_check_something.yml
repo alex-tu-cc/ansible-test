@@ -1,0 +1,18 @@
+---
+
+- name: add pc-tools ppa
+  apt_repository:
+      repo: 'ppa:alextu/pc-tools'
+      codename: "{{ ansible_lsb.codename }}"
+
+- name: install reboot-check
+  apt:
+      name: "{{item}}"
+      state: present
+  with_items:
+    - reboot-check
+
+- name: set the operation
+
+- name: set the check target
+
