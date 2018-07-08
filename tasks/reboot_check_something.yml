@@ -1,5 +1,4 @@
 ---
-
 - name: add pc-tools ppa
   apt_repository:
       repo: 'ppa:alextu/pc-tools'
@@ -12,7 +11,32 @@
   with_items:
     - reboot-check
 
-- name: set the operation
+- name: copy check script
+  copy:
+    backup: 'yes'
+    dest: /usr/sbin/
+    src: ./{{ check_script }}
+    mode: '755'
 
-- name: set the check target
+- name: add chereboot_ck rule
+  shell: /usr/sbin/reboot-check.py -a "{{ loop_checking_type }} --call /usr/sbin/{{ check_script }} --cycle {{ cycles }} --wait_secs {{ wait_secs}}" >> /var/log/ansible.log
 
+- name: reboot remote
+  shell: shutdown -r now
+
+- name: wait for remote done checking.
+  shell: bash ./wait_reboot_check.sh "{{ ansible_ssh_host }}"
+
+#- name: Wait 60 seconds, but only start checking after "{{ wait_secs }}" seconds
+#  wait_for_connection:
+##    delay: 60
+#    timeout: "{{ wait_secs }}"
+#
+#- name: wait result
+#  wait_for:
+#    path: /var/local/result
+
+
+#- name: get result
+#  msg: "todo....result"
+#

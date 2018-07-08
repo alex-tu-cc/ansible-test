@@ -15,4 +15,10 @@
     - base
   tasks:
   - include: tasks/prepare_pc_enablemane.yml
-  - include: tasks/gather_remote_pc_logs.yml
+  - include: tasks/reboot_check_something.yml
+    vars:
+        check_script: "alex_check.sh"
+        loop_checking_type: "stress-check-s3-custom.sh"
+        cycles: "30"
+        wait_secs: "30"
+#  - include: tasks/gather_remote_pc_logs.yml
