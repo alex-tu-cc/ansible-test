@@ -13,9 +13,14 @@
 ##    - name: zsh
 #    - name: htop
 #    - name: yadm
+- name: check rsync command
+  apt:
+    name: "rsync"
+    state: present
 
 - name: config git, tmux, vim
   synchronize:
+    mode: push
     src: "{{lookup('env','HOME')}}/{{item}}"
     dest: "{{lookup('env','HOME')}}/"
   with_items:
@@ -36,12 +41,11 @@
 #  with_items:
 #    - ".vim"
 #    - ".vimrc"
-- name: config tmux
-  copy:
-    src: "{{lookup('env','HOME')}}/.tmux.conf"
-    dest: "{{lookup('env','HOME')}}/.tmux.conf"
+#- name: config tmux
+#  copy:
+#    src: "{{lookup('env','HOME')}}/.tmux.conf"
+#    dest: "{{lookup('env','HOME')}}/.tmux.conf"
 #- name: config tmux
 #- name: config zsh
 #- name: prepare system settings.
-#    
 

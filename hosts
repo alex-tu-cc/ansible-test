@@ -10,10 +10,10 @@
 
 #server1 ansible_ssh_host=192.168.1.106 ansible_ssh_port=32768 ansible_ssh_pass=docker
 #node1 ansible_ssh_host=192.168.1.107 ansible_ssh_port=22 ansible_ssh_pass=u
-node1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=32768 ansible_ssh_pass=docker
+node1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=32772 ansible_ssh_pass=docker
 node2 ansible_ssh_host=127.0.0.1 ansible_ssh_port=32769 ansible_ssh_pass=docker
+node3 ansible_ssh_host=127.0.0.1 ansible_ssh_port=32769 ansible_ssh_pass=docker
 [local]
-node1
 node2
 # Ex 1: Ungrouped hosts, specify before any group headers.
 

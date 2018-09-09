@@ -8,6 +8,7 @@
 
   with_items:
       - name: gcc
+      - name: g++
       - name: devscripts
       - name: equivs
       - name: pkg-create-dbgsym

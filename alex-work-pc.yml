@@ -15,6 +15,7 @@
         msg: "{{ local_ssh_pub_key }}"
     - debug:
         msg: "{{ lookup('config', 'DEFAULT_LOOKUP_PLUGIN_PATH') }}"
+
 #    - debug:
 #        msg: "{{ hostvars[inventory_hostname] }}"
 
@@ -26,6 +27,7 @@
         ssh_key:
         - "{{ lookup('file',lookup('env','HOME')+'/.ssh/id_rsa.pub') }}"
     - base
+
     # install vim
 #    - trombik.vim
 #
