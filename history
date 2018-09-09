@@ -1,0 +1,200 @@
+ 2650  cd /etc/ansible
+ 2652  cp /etc/ansible/* ./
+ 2653  ansible all -m command -a 'echo Hello World on Docker.> /tmp/alex.test'
+ 2654  ansible all -m command -a 'echo "Hello World on Docker." > /tmp/alex.test'
+ 2657  ansible all -m command -a 'echo "Hello World on Docker." | tee /tmp/alex.test'
+ 2658  ansible all -m command -a 'cat /tmp/test'
+ 2659  ansible all -m command -a 'cat /tmp/alex'
+ 2660  man ansible 
+ 2661  ansible-playbook hello_world.yml
+ 2662  docker run --name server1 -P chusiang/ansible-jupyter:ubuntu-14.04
+ 2663  docker run --name control_machine -P chusiang/ansible-managed-node:ubuntu-14.04
+ 2667  docker run --rm --name control_machine -P chusiang/ansible-managed-node:ubuntu-14.04 bash 
+ 2668  docker run --name control_machine -d -P chusiang/ansible-managed-node:ubuntu-14.04 
+ 2671  docker run --name control_machine -v /tmp/ansible:/tmp/ansible -d -P chusiang/ansible-managed-node:ubuntu-14.04 
+ 2676  mkdir ansible
+ 2677  cp -r /tmp/ansible/* ./
+ 2678  mv ansible ~/my-library/github
+ 2679  ln -s ~/my-library/github/ansible
+ 2694  git clone https://github.com/ansible/ansible-examples.git
+ 2714  cp -rf * /tmp/ansible
+ 2717  cd ansible-examples
+ 2726  cd /tmp/ansible
+ 2727  ansible --version
+ 2728  docker run --name control_machine -v /tmp/ansible:/tmp/ansible -d -P ubuntu:xenial
+ 2729  docker run --name control_machine_xenial -v /tmp/ansible:/tmp/ansible -d -P ubuntu:xenial
+ 2731  docker run --name control_machine_xenial -v /tmp/ansible:/tmp/ansible -P ubuntu:xenial
+ 2734  docker run --rm control -v /tmp/ansible:/tmp/ansible -P ubuntu:xenial
+ 2737  docker run --rm -v /tmp/ansible:/tmp/ansible -P --name control ubuntu:xenial
+ 2738  docker run -it --rm -v /tmp/ansible:/tmp/ansible -P --name control ubuntu:xenial
+ 2743  docker run -it --rm -v /tmp/ansible:/tmp/ansible -P --name node ubuntu:xenial
+ 2746  docker run -it --rm -v /tmp/ansible:/tmp/ansible -P 32768:22--name node ubuntu:xenial
+ 2747  docker run -it --rm -v /tmp/ansible:/tmp/ansible -p 32768:22--name node ubuntu:xenial
+ 2748  docker run -it --rm -v /tmp/ansible:/tmp/ansible -p 32768:22 --name node ubuntu:xenial
+ 2755  cp -rf *  ~/my-library/github/ansible
+ 2757  git remote add github git@github.com:alex-tu-cc/ansible-test.git
+ 2760  docker commit node ansible-node-xenial:sshd
+ 2761  git commit control ansible-manager:xenial
+ 2762  docker commit control ansible-manager:xenial
+ 2773  ansible-galaxy install anaconda
+ 2774  ansible-galaxy search  anaconda
+ 2775  ansible-galaxy install andrewrothstein.anaconda
+ 2776  man ansible-galaxy
+ 2777  ansible-galaxy install andrewrothstein.anaconda -p roles
+ 2782  vim ansible.yml
+ 2783  mv ansible.yml anaconda
+ 2795  docker run --name control_machine -v /tmp/ansible:/tmp/ansible -d -P chusiang/ansible-managed-node:ubuntu-14.04
+ 2803  docker run --name ansible-manager -v /home/alex:/home/alex -P ansible-manager:xenial
+ 2804  docker exec -it ansible-manager bash 
+ 2805  docker rm ansible-manager
+ 2806  docker run -it --name ansible-manager -v /home/alex:/home/alex -P ansible-manager:xenial
+ 2900  docker pull alextucc/ansible_manager:xenial
+ 2906  docker run -it --rm -v /home/alextu:/home/alextu alextucc/ansible_manager:xenial
+ 2907  docker run -it --rm -v /home/alex:/home/alex alextucc/ansible_manager:xenial
+ 7931  docker search chusiang/ansible-managed-node
+ 7932  docker search chusiang/ansible-managed-node | grep ubuntu 
+ 7933  docker pull chusiang/ansible-managed-node:ubuntu-14.04
+ 7976  ls -l my-gollum-wiki/PC/ansible
+ 8089  apt-cache search ansible
+ 8090  sudo apt-get install ansible 
+ 8092  aptitude install ansible 
+ 8093  vim ansible-docker.cfg
+ 8095  mv ansible.cfg.bak
+ 8096  mv ansible.cfg ansible.cfg.bak
+ 8097  mv ansible-docker.cfg ansible.cfg
+ 8101  ansible all -m ping
+ 8102  ansible all -m command -a 'echo Hello World on Docker.'
+ 8104  less ansible.cfg.bak
+ 8105  docker run --name server1 -d -P chusiang/ansible-managed-node:ubuntu-14.04
+ 8106  docker run --name server2 -d -P chusiang/ansible-managed-node:ubuntu-14.04
+ 8107  ansible all -m ping 
+ 8109  find . -iname "*ansible*"
+ 8111  less ansible_manager
+ 8112  cd ansible_manager
+ 8117  find . -name "ansible"
+ 8121  ansible --help 
+ 8122  ansible --help  | less
+ 8125  ansible-galaxy install -f -p roles chusiang.php7
+ 8129  git clone https://github.com/chusiang/vim-and-vi-mode.ansible.role.git
+ 8130  cd vim-and-vi-mode.ansible.role
+ 8166  cd my-library/github/ansible
+ 8167  find . -name ansible
+ 8171  git commit -m "ansible: take note"
+ 8224  atom ansible.md
+ 8225  mv ansible ../tools
+ 8226  ln -s ../tools/ansible
+ 8228  rm ansible
+ 8231  ln -sf ../../github/ansible
+ 8236  ansible-galaxy install --roles-path roles manala.vim
+ 8244  ansible-galaxy install --roles-path roles trombik.vim
+ 8245  grep ansible_os_family -inr 
+ 8246  ansible all -m ansible_os_family
+ 8254  ansible-galaxy install --roles-path roles debops.authorized_keys
+ 8261  ansible-galaxy install --roles-path roles debops.sshd
+ 8287  less ansible.md
+ 8304  dpkg -L  ansible 
+ 8305  dpkg -L  ansible  | grep plug
+ 8306  dpkg -L  ansible  | grep plug | grep look
+ 8311  cp -r ansible /srv/rclone/my-library.git/tmp
+ 8312  cd ~/my-library/github/ansible
+ 8313  ansible -m debug -a "var=hostvars['hostname']" localhost
+ 8314  ansible -m debug -a "var=hostvars['local']" localhost
+ 8315  ansible -m debug -a "var=hostvars['node1']" localhost
+ 8316  ansible -m debug -a "var=hostvars['debian-steamboat13']" localhost
+ 8317  ansible -m debug -a "var=hostvars[inventory_hostname]" localhost
+ 8320  cd ../tools/ansible
+ 8323  ansible-doc -t lookup -l 
+ 8324  ansible-galaxy install --roles-path roles debops.ansible_plugins
+ 8327  ansible-galaxy install --roles-path roles debops.secret
+ 8330  cd ansible/playbooks
+ 8332  cd debops.ansible_plugins
+ 8336  ls ~/.ansible/plugins/lookup:/usr/share/ansible/plugins/lookup
+ 8337  ls ~/.ansible/plugins/lookup
+ 8342  ansible all -m setup | less
+ 8343  ansible-playbook alex-work-pc.yml
+ 8349  cp -r ansible /srv/rclone/my-library.git/tmp/
+ 8350  sudo cp -r ansible /srv/rclone/my-library.git/tmp/
+ 8364  ansible-galaxy install --roles-path roles singleplatform-eng.users
+ 8365  ansible-galaxy install --roles-path roles bt5e.docker-non-root-user\n
+ 8377  cat /home/alextu/.ansible/tmp/ansible-local-283235bLcGi/ansible-tmp-1530032312.89-122319569396698/synchronize.py
+ 8378  vim /home/alextu/.ansible/tmp/ansible-local-28488hqudUt/ansible-tmp-1530032433.16-59370386808897/synchronize.py
+ 8379  vim /usr/lib/python2.7/dist-packages/ansible/modules/files/synchronize.py
+ 8380  sudo vim /usr/lib/python2.7/dist-packages/ansible/modules/files/synchronize.py
+ 8391  less /home/alextu/.ansible/tmp/ansible-local-14421qnEYdo/ansible-tmp-1530200320.26-144387194733925/synchronize.py
+ 8392  less usr/bin/python /home/alextu/.ansible/tmp/ansible-local-15069Rn6SBt/ansible-tmp-1530200651.17-166340065322558/synchronize.py
+ 8393  less /usr/bin/python /home/alextu/.ansible/tmp/ansible-local-15069Rn6SBt/ansible-tmp-1530200651.17-166340065322558/synchronize.py
+ 8394  less /home/alextu/.ansible/tmp/ansible-local-15069Rn6SBt/ansible-tmp-1530200651.17-166340065322558/synchronize.py
+ 8395  file /home/alextu/.ansible/tmp/ansible-local-15069Rn6SBt/ansible-tmp-1530200651.17-166340065322558/synchronize.py
+ 8400  cat ansible.cfg
+ 8401  less home/alextu/my-library/github/ansible/ansible-retry/alex-work-pc.retry
+ 8402  less /home/alextu/my-library/github/ansible/ansible-retry/alex-work-pc.retry
+ 8403  less /home/alextu/.ansible/tmp/ansible-local-19144fNQbnN/ansible-tmp-1530202432.42-83075447707064/synchronize.py 
+ 8404  less /home/alextu/.ansible/tmp/ansible-local-19328gbHVX5/ansible-tmp-1530202518.41-74092082690982/synchronize.py
+ 8405  /usr/bin/python /home/alextu/.ansible/tmp/ansible-local-19551bEnMeK/ansible-tmp-1530202604.26-167133491801676/synchronize.py
+ 8406  less/usr/bin/python /home/alextu/.ansible/tmp/ansible-local-19551bEnMeK/ansible-tmp-1530202604.26-167133491801676/synchronize.py
+ 8407  less /usr/bin/python /home/alextu/.ansible/tmp/ansible-local-19551bEnMeK/ansible-tmp-1530202604.26-167133491801676/synchronize.py
+ 8408  less /home/alextu/.ansible/tmp/ansible-local-19551bEnMeK/ansible-tmp-1530202604.26-167133491801676/synchronize.py
+ 8418  ANSIBLE_DEBUG=1 ansible-playbook -vvv alex-work-pc.yml
+ 8424  git add ansible
+ 8426  git reset ansible
+ 8427  git add ansible.md
+ 8428  git commit -m "rsync; ansible syntex checking."
+ 8436  tar zcvf /srv/rclone/my-library.git/tmp/ansible.tar.gz ansible
+ 8437  rm -r  /srv/rclone/my-library.git/tmp/ansible
+ 8438  sudo rm -r  /srv/rclone/my-library.git/tmp/ansible
+ 8477  git diff ansible.cfg
+ 8478  less ansible.cfg
+ 8480  git add ansible.cfg hosts
+ 8506  docker run --name server2 -d -P chusiang/ansible-managed-node:ubuntu-16.04
+ 8507  docker run --name server3 -d -P chusiang/ansible-managed-node:ubuntu-16.04
+ 8508  vim ansible.cfg
+ 8524  ls -l /home/alextu/my-library/github/ansible/none
+ 8540  dpkg -l | grep ansible
+ 8549  docker run --name server1 --rm -d -P chusiang/ansible-managed-node:ubuntu-14.04
+ 8550  ansible-playbook -vvv alex-work-pc.yml
+ 8551  less /home/alextu/my-library/github/ansible/tasks/prepare_pc_enablemane.yml
+ 8552  vim  /home/alextu/my-library/github/ansible/tasks/prepare_pc_enablemane.yml
+ 8556  ansible-playbook y -vvv debug-bring-up.yml
+ 8604  cd ../github/ansible
+ 8612  docker run --rm --name server3 -v /home:/mnt -d -P chusiang/ansible-managed-node:ubuntu-16.04
+ 8614  ansible-playbook  -vvv debug-bring-up.yml
+ 9113  cd github/ansible
+ 9835  docker pull chusiang/ansible-managed-node:ubuntu-18.04
+ 9836  sudo docker run -it -v /home:/mnt --rm chusiang/ansible-managed-node
+ 9837  sudo docker run -it -v /home:/mnt --rm chusiang/ansible-managed-node:18.04 --name 18.04-ansible
+ 9838  sudo docker run -it -v /home:/mnt --rm chusiang/ansible-managed-node:ubuntu-18.04 --name 18.04-ansible
+ 9839  docker run -it -v /home:/mnt --rm chusiang/ansible-managed-node:ubuntu-18.04 --name 18.04-ansible
+ 9841  docker run -it -v /home:/mnt --rm chusiang/ansible-managed-node:ubuntu-18.04 18.04-ansible
+ 9842  docker run -it -v /home:/mnt --rm chusiang/ansible-managed-node:ubuntu-18.04 18.04_ansible
+ 9843  docker run -it -v /home:/mnt --rm --name bionic_ansible chusiang/ansible-managed-node:ubuntu-18.04
+ 9845  docker stopy bionic_ansible
+ 9846  docker stop bionic_ansible
+ 9850  man ansible
+ 9851  ansible-playbook alex-work-pc.yml --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9852  man ansible-playbook
+ 9861  docker run -it -v /home:/mnt --rm --name server1 -d -P chusiang/ansible-managed-node:ubuntu-18.04
+ 9862  ansible-playbook -v alex-work-pc.yml --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9866  ansible-playbook -v alex-work-pc.yml --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32769 ansible_ssh_pass=docker"
+ 9871  ansible-playbook -vvv alex-work-pc.yml --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32769 ansible_ssh_pass=docker"
+ 9877  ansible -m debug -a  localhost -m synchronize -a 'become: "no" remote_user: "alextu" private_key: "~/.ssh/id_rsa" src=/tmp/test.file dest=/tmp/' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9878  ansible -m debug localhost -m synchronize -a 'become: "no" remote_user: "alextu" private_key: "~/.ssh/id_rsa" src=/tmp/test.file dest=/tmp/' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9879  ansible -m debug localhost -m synchronize -a 'src=/tmp/test.file dest=/tmp/' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9880  ansible -m debug localhost -m synchronize -a 'src=/tmp/test.file dest=/tmp/test' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9885  ansible -m debug localhost -m synchronize -a 'src=/test dest=/test' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9886  ansible -m debug localhost -m synchronize -a 'src=/tmp/test dest=/tmp' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9887  ansible -m debug -i hosts -m synchronize -a 'src=/test dest=/test' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9893  ansible -m debug -i `pwd`/hosts -m synchronize -a 'src=/test dest=/test' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9897  ansible -m debug -i `pwd`/hosts test.yml -m synchronize -a 'src=/test dest=/test' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9901  ansible -m debug -i `pwd`/hosts local -m synchronize -a 'src=/test dest=/test' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9902  ansible -m debug -i `pwd`/hosts local -m synchronize -a 'src=/tmp/test dest=/tmp' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9903  ansible -m debug -i `pwd`/hosts local -m synchronize -a 'mode=push src=/tmp/test dest=/tmp' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9904  ansible -i `pwd`/hosts local -m synchronize -a 'mode=push src=/tmp/test dest=/tmp' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9905  ansible -vvv -i `pwd`/hosts local -m synchronize -a 'mode=push src=/tmp/test dest=/tmp'
+ 9907  ansible -vvv -i `pwd`/hosts local -m synchronize -a 'mode=push src=/tmp/test/test2 dest=/tmp'
+ 9908  ansible -vvv -i `pwd`/hosts local -m synchronize -a 'mode=push src=/tmp/test dest=/tmp' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+ 9912  vim ansible
+ 9913  vim ansible.md
+ 9914  ansible -vvv -i `pwd`/hosts local -m synchronize -a 'mode=push src=/tmp/test/test3 dest=/tmp' --extra-vars "ansible_ssh_host=127.0.0.1  ansible_ssh_port=32768 ansible_ssh_pass=docker"
+10013  history | grep ansible 
+10018  cd ansible
+10024  history| grep ansible
