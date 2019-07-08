@@ -1,0 +1,2 @@
+# https://www.toptechskills.com/ansible-tutorials-courses/how-to-fix-usr-bin-python-not-found-error-tutorial/
+ansible_python_interpreter: /usr/bin/python3
