@@ -9,10 +9,14 @@
 #   - A hostname/ip can be a member of multiple groups
 
 master ansible_ssh_host=10.39.189.138 ansible_connection=ssh ansible_ssh_user=multipass
-node ansible_ssh_host=10.39.189.215 ansible_connection=ssh ansible_ssh_user=multipass
+master2 ansible_ssh_host=10.39.189.211 ansible_connection=ssh ansible_ssh_user=multipass
+node ansible_ssh_host=10.39.189.242 ansible_connection=ssh ansible_ssh_user=multipass
+node2 ansible_ssh_host=10.39.189.7 ansible_connection=ssh ansible_ssh_user=multipass
 [local]
+master2
 master
 node
+node2
 # Ex 1: Ungrouped hosts, specify before any group headers.
 
 #green.example.com

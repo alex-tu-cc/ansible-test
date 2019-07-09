@@ -1,5 +1,5 @@
 ---
-- hosts: node
+- hosts: node2
   become: true
   tasks:
   - name: Install packages that allow apt to be used over HTTPS
@@ -64,9 +64,7 @@
 
   - name: Adding apt repository for Kubernetes
     apt_repository:
-      allow_unauthenticated: yes
-      force: yes
-      repo: deb [trusted=yes allow-insecure=yes] https://apt.kubernetes.io/ kubernetes-xenial main
+      repo: deb [trusted=yes] https://apt.kubernetes.io/ kubernetes-xenial main
       state: present
       filename: kubernetes.list
 
@@ -83,6 +81,7 @@
 
   - name: Configure node ip
     lineinfile:
+      create: yes
       path: /etc/default/kubelet
       line: KUBELET_EXTRA_ARGS=--node-ip={{ node_ip }}
 
@@ -91,10 +90,6 @@
       name: kubelet
       daemon_reload: yes
       state: restarted
-## Step 2.3: Installing kubelet, kubeadm and kubectl using the below code.
-  - name: Initialize the Kubernetes cluster using kubeadm
-    command: kubeadm init --apiserver-advertise-address="10.39.189.178" --apiserver-cert-extra-sans="10.39.189.178"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16
-## Step 2.3: Initialize the Kubernetes cluster with kubeadm using the below code (applicable only on master node).
 
 ## Step 3.2: Join the nodes to the Kubernetes cluster using below code.
   - name: Copy the join command to server location

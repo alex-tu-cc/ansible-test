@@ -1,5 +1,5 @@
 ---
-- hosts: master
+- hosts: master2
   become: true
   tasks:
   - name: Install packages that allow apt to be used over HTTPS
@@ -95,7 +95,7 @@
       state: restarted
 
   - name: Initialize the Kubernetes cluster using kubeadm
-    command: kubeadm init --apiserver-advertise-address="10.39.189.178" --apiserver-cert-extra-sans="10.39.189.178"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16
+    command: kubeadm init --apiserver-advertise-address="{{ K8S_MASTER_IP }}" --apiserver-cert-extra-sans="{{ K8S_MASTER_IP }}"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16 
 
   - name: Setup kubeconfig for multipass user
     command: "{{ item }}"
