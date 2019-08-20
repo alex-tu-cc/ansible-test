@@ -14,6 +14,7 @@
     local_ssh_pub_key: "{{ lookup('env','HOME') }}/.ssh/id_rsa.pub"
     ansible_python_interpreter: /usr/bin/python3
 
+  tasks:
    - name: copy projects stuff - prepare
      become: yes
      shell: chown "{{ansible_ssh_user}}":"{{ansible_ssh_user}}" /srv -R && mkdir /srv/iso
@@ -37,5 +38,7 @@
   tasks:
     - name: chmod
       become: yes
-      shell: chmod 660 /etc/davfs2/secrets
+      shell: chmod 600 /etc/davfs2/secrets
+      tags:
+        - local
 
