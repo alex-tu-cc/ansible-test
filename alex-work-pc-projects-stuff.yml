@@ -28,6 +28,7 @@
        - "/srv/git"
        - "/srv/iso/base"
        - "/srv/iso/ubuntu"
+       - "/etc/docker/daemon.json"
 
   roles:
     - role: copy_private_data
