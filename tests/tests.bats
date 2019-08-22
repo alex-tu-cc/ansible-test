@@ -6,8 +6,10 @@
 }
 
 @test "stop existed docker instance for test" {
-    docker stop server1
-    docker rm server1
+    if [ -n "$(docker ps -a | grep server1)" ];then
+        docker stop server1
+        docker rm server1
+    fi
 }
 @test "create docker instance for test" {
     docker run --name server1 -d -P ansible-docker-test
@@ -15,5 +17,9 @@
 
 @test "ansible playbook " {
     PORT=$(docker port server1 | grep 22 | cut -d ':' -f2)
-    ansible-playbook alex-work-pc.yml --extra-vars "ansible_ssh_host=localhost ansible_ssh_port=${PORT} ansible_ssh_user=alextu"
+cat <<EOF > /tmp/hosts
+[all]
+    pc1 ansible_ssh_host=localhost ansible_ssh_port=$PORT ansible_ssh_user=alextu
+EOF
+    ansible-playbook -i /tmp/hosts alex-work-pc.yml> /tmp/test.log
 }

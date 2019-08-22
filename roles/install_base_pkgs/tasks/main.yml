@@ -45,6 +45,11 @@
     - ".vim"
     - ".vimrc"
     - ".zshrc"
+  register: copying
+
+- debug: var=copying.stdout_lines
+
+- debug: msg="{{ copying }}"
 
 # it's only support python2, postpone it.
 #- name: vim - configure YCM-Generator
