@@ -30,8 +30,18 @@
        - "/srv/iso/ubuntu"
        - "/etc/docker/daemon.json"
 
-  roles:
-    - role: copy_private_data
+    - name: copy projects stuff by root
+      become: yes
+      synchronize:
+        src: "{{item}}"
+        dest: "{{item}}"
+      with_items:
+        - "/etc/davfs2/secrets"
+        - "/etc/davfs2/davfs2.conf"
+        - "/etc/fstab"
+
+#  roles:
+#    - role: copy_private_data
 
 #- debug: msg="recover security temporally"
 - hosts: 127.0.0.1

@@ -58,15 +58,15 @@
     - lftp
     state: present
 
-- name: copy projects stuff
-  become: yes
-  synchronize:
-    src: "{{item}}"
-    dest: "{{item}}"
-  with_items:
-    - "/etc/davfs2/secrets"
-    - "/etc/davfs2/davfs2.conf"
-    - "/etc/fstab"
+#- name: copy projects stuff
+#  become: yes
+#  synchronize:
+#    src: "{{item}}"
+#    dest: "{{item}}"
+#  with_items:
+#    - "/etc/davfs2/secrets"
+#    - "/etc/davfs2/davfs2.conf"
+#    - "/etc/fstab"
 
 - name: copy .ssh
   synchronize:
