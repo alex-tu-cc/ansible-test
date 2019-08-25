@@ -15,9 +15,9 @@
 - name: "APT - install misc packages"
   become: yes
   apt:
-    name: "{{ item }}"
     update_cache: yes
-  with_items:
+    state: present
+    name:
     - "aptitude"
     - "apt-transport-https"
     - "ca-certificates"
