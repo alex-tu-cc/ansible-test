@@ -15,6 +15,27 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
+
+    - name: install projects packages
+      become: yes
+      apt:
+        update_cache: yes
+        name:
+        - davfs2
+        - lp-fish-tools
+        - lftp
+        state: present
+
+    - name: copy projects stuff by root
+      become: yes
+      synchronize:
+        src: "{{item}}"
+        dest: "{{item}}"
+      with_items:
+        - "/etc/davfs2/secrets"
+        - "/etc/davfs2/davfs2.conf"
+        - "/etc/fstab"
+
    - name: copy projects stuff - prepare
      become: yes
      shell: chown "{{ansible_ssh_user}}":"{{ansible_ssh_user}}" /srv -R && mkdir /srv/iso
@@ -29,17 +50,6 @@
        - "/srv/iso/base"
        - "/srv/iso/ubuntu"
        - "/etc/docker/daemon.json"
-
-    - name: copy projects stuff by root
-      become: yes
-      synchronize:
-        src: "{{item}}"
-        dest: "{{item}}"
-      with_items:
-        - "/etc/davfs2/secrets"
-        - "/etc/davfs2/davfs2.conf"
-        - "/etc/fstab"
-
 #  roles:
 #    - role: copy_private_data
 

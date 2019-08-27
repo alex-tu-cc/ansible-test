@@ -48,15 +48,15 @@
     - ".bazaar"
     - ".config/rclone/rclone.conf"
 
-- name: install projects packages
-  become: yes
-  apt:
-    update_cache: yes
-    name:
-    - davfs2
-    - lp-fish-tools
-    - lftp
-    state: present
+#- name: install projects packages
+#  become: yes
+#  apt:
+#    update_cache: yes
+#    name:
+#    - davfs2
+#    - lp-fish-tools
+#    - lftp
+#    state: present
 
 #- name: copy projects stuff
 #  become: yes
