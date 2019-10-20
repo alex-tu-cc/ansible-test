@@ -13,6 +13,7 @@
         - im-config
         - tree
         - ansible
+        - network-manager-openvpn-gnome
     state: present
 
 

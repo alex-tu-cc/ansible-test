@@ -9,7 +9,7 @@
 
   with_items:
     - name: git
-    - name: vim
+    - name: vim-gnome
     - name: exuberant-ctags
     - name: tmux
     - name: zsh
