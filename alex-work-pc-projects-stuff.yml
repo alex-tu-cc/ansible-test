@@ -37,21 +37,29 @@
         - "/etc/davfs2/davfs2.conf"
         - "/etc/fstab"
 
-   - name: copy projects stuff - prepare
-     become: yes
-     shell: chown "{{ansible_ssh_user}}":"{{ansible_ssh_user}}" /srv -R && mkdir /srv/iso
+    - name: copy projects stuff - prepare
+      become: yes
+      shell: chown "{{ansible_ssh_user}}":"{{ansible_ssh_user}}" /srv -R && mkdir -p /srv/iso
 
-   - name: copy projects stuff
-     synchronize:
-       src: "{{item}}"
-       dest: "{{item}}"
-     with_items:
-       - "/home/{{ansible_ssh_user}}/.2fa"
-       - "/home/{{ansible_ssh_user}}/workspace"
-       - "/srv/git"
-       - "/srv/iso/base"
-       - "/srv/iso/ubuntu"
-       - "/etc/docker/daemon.json"
+    - name: copy projects stuff
+      become: yes
+      synchronize:
+        src: "{{item}}"
+        dest: "{{item}}"
+      with_items:
+        - "/etc/docker/daemon.json"
+
+    - name: copy projects stuff
+      synchronize:
+        src: "{{item}}"
+        dest: "{{item}}"
+      with_items:
+        - "/home/{{ansible_ssh_user}}/.2fa"
+        - "/home/{{ansible_ssh_user}}/workspace"
+        - "/srv/git"
+        - "/srv/iso/base"
+        - "/srv/iso/ubuntu"
+        - "/etc/docker/daemon.json"
 #  roles:
 #    - role: copy_private_data
 
