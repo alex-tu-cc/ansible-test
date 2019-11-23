@@ -54,12 +54,12 @@
         src: "{{item}}"
         dest: "{{item}}"
       with_items:
-        - "/home/{{ansible_ssh_user}}/.2fa"
-        - "/home/{{ansible_ssh_user}}/workspace"
-        - "/srv/git"
-        - "/srv/iso/base"
-        - "/srv/iso/ubuntu"
-        - "/etc/docker/daemon.json"
+        - "/home/{{ansible_ssh_user}}/.2fa/"
+        - "/home/{{ansible_ssh_user}}/workspace/"
+        - "/srv/git/"
+        - "/srv/iso/base/"
+        - "/srv/iso/ubuntu/"
+
 #  roles:
 #    - role: copy_private_data
 

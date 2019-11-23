@@ -45,7 +45,7 @@
     src: "{{lookup('env','HOME')}}/{{item}}"
     dest: "/home/{{ansible_ssh_user}}/{{item}}"
   with_items:
-    - ".bazaar"
+    - ".bazaar/"
     - ".config/rclone/rclone.conf"
 
 #- name: install projects packages
