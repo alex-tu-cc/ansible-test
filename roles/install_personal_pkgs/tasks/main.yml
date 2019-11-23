@@ -14,6 +14,9 @@
         - tree
         - ansible
         - network-manager-openvpn-gnome
+        - fcitx
+        - fcitx-chewing
+        - fcitx-table-array30
     state: present
 
 
