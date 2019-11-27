@@ -1,0 +1,9 @@
+---
+- name: install sstephenson/batsinstall bats
+  shell: basher install sstephenson/bats
+
+- name: install bashup/gitea-cli
+  shell: basher install bashup/gitea-cli
+
+- name: basher update
+  shell: basher update

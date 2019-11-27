@@ -1,0 +1,15 @@
+---
+- name: checkout basher
+  git:
+    repo: https://github.com/basherpm/basher.git
+    dest: "{{ lookup('env','HOME') }}/.basher"
+
+- name: install basher - PATH
+  lineinfile:
+    path: "{{ lookup('env','HOME') }}/.zshrc"
+    line: 'export PATH="$HOME/.basher/bin:$PATH"'
+
+- name: install basher - basher init
+  lineinfile:
+    path: "{{ lookup('env','HOME') }}/.zshrc"
+    line: 'eval "$(basher init -)"'
