@@ -68,6 +68,11 @@
 #    - "/etc/davfs2/davfs2.conf"
 #    - "/etc/fstab"
 
+- name: copy fstab
+  synchronize:
+    src: "/etc/fstab"
+    dest: "{{lookup('env','HOME')}}/fstab"
+
 - name: copy .ssh
   synchronize:
     src: "{{lookup('env','HOME')}}/.ssh"

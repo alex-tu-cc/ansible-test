@@ -35,7 +35,6 @@
       with_items:
         - "/etc/davfs2/secrets"
         - "/etc/davfs2/davfs2.conf"
-        - "/etc/fstab"
 
     - name: copy projects stuff - prepare
       become: yes
