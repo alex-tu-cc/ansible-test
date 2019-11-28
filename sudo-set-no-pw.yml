@@ -1,9 +1,11 @@
 ---
 - hosts: all
+  become: true
   tasks:
     - lineinfile:
-        path: /etc/sudoers
+        path: /etc/sudoers.d/root-wo-pwd
         state: present
+        create: yes
         regexp: '^%sudo'
         line: '%sudo ALL=(ALL) NOPASSWD: ALL'
         validate: 'visudo -cf %s'
