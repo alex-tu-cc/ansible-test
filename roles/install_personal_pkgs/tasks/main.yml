@@ -17,6 +17,9 @@
         - fcitx
         - fcitx-chewing
         - fcitx-table-array30
+        - gparted
+        - shelltest
+        - firefox
     state: present
 
 
@@ -31,6 +34,12 @@
 
 - name: install docker ce
   include_tasks: ubuntu-ansible-docker-install.yml
+
+- name: install basher
+  include_tasks: basher.yml
+
+- name: install basher packages
+  include_tasks: basher-pkgs.yml
 
 - name: install language support for zh and set default ims as fcitx
   become: yes
