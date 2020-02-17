@@ -33,6 +33,10 @@
   become: yes
   shell: docker pull ubuntu || true
 
+- name: pull rclone docker image
+  become: yes
+  shell: docker pull rclone/rclone || true
+
 - name: add remote user to docker group
   become: yes
   shell: usermod -aG docker "{{ ansible_ssh_user }}"
