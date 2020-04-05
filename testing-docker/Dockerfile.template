@@ -1,14 +1,14 @@
+# this file is for test cases in tests/
 # docker run --name server1 -d -P  ansible-docker
-FROM ubuntu:18.04
+FROM ubuntu:{SERIES}
 
 ARG DEF_USER="alextu"
 # Update the index of available packages.
 RUN apt-get update
 
 # Install the requires package.
-RUN apt-get install -y openssh-server python sudo curl wget bash-completion openssl \
-      && \
-      apt-get clean
+RUN apt-get install -y openssh-server {PYTHON_PKG} sudo curl wget bash-completion openssl &&\
+    apt-get clean
 
 # Setting the sshd.
 RUN mkdir /var/run/sshd
@@ -36,7 +36,7 @@ COPY authorized_keys /tmp
 RUN mkdir /home/$DEF_USER/.ssh && \
       mv /tmp/authorized_keys /home/$DEF_USER/.ssh/ && \
       chown -R $DEF_USER:$DEF_USER /home/$DEF_USER/.ssh/ && \
-      chmod 644 /home/$DEF_USER/.ssh/authorized_keys && \
+      chmod 600 /home/$DEF_USER/.ssh/authorized_keys && \
       chmod 700 /home/$DEF_USER/.ssh
 
 EXPOSE 22

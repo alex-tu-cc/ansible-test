@@ -8,8 +8,6 @@
         - chromium-browser
         - gdebi
         - flameshot
-#https://itsfoss.com/shutter-edit-button-disabled/
-        - shutter
         - im-config
         - tree
         - ansible
@@ -18,7 +16,7 @@
         - fcitx-chewing
         - fcitx-table-array30
         - gparted
-        - shelltest
+        - shellcheck
         - firefox
     state: present
 

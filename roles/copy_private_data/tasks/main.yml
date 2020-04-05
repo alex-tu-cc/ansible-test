@@ -14,15 +14,30 @@
     src: "{{lookup('env','HOME')}}/bin"
     dest: "/home/{{ansible_ssh_user}}/"
 
-- name: copy system credentials
+- name: copy system credentials ,source.list
   become: yes
   synchronize:
     src: "/etc/apt/sources.list.d"
     dest: "/etc/apt/"
 
+#- debug: msg="Your sources.list.d has been copied to /etc/apt/sources.list.d.old on target machine"
+
+- name: update copied source.list to the series of target machine.
+  become: yes
+  shell: sed -i "s/[a-z]* main/$(lsb_release -c -s) main/" /etc/apt/sources.list.d/*
+  register: import_all_keys
+
 - name: import all keys
   become: yes
-  shell: for i in `sudo apt-get update | grep NO_PUBKEY | awk '{print $15}'`; do echo "import $i"; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $i; done
+  shell: |
+        set -x
+        for i in `sudo apt-get update 2>&1 | grep NO_PUBKEY | awk '{print $15}'`; do echo "import $i"; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $i; done
+        # mark out all failed sources, it might even not exist in new series.
+        #for i in $(apt-get update 2>&1 | grep "E:"| awk -F"[ \']" '{print $5}'); do
+        #    sed -i "s/deb $i/#deb $i/" /etc/apt/sources.list.d/*
+        #done
+        for i in $(apt-get update 2>&1 | grep "E:" | awk -F"( |//)" '{print $5}');do echo searching $i; for file in $(grep $i /etc/apt/sources.list.d/*.list | cut -d':' -f1 | uniq | xargs);do mv $file $file.save;done;done
+        apt-get update
   register: import_all_keys
 
 - debug: msg="{{import_all_keys}}"

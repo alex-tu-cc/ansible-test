@@ -9,10 +9,11 @@
 
   with_items:
     - name: git
-    - name: vim-gnome
+#    - name: vim-gnome
     - name: exuberant-ctags
     - name: tmux
     - name: zsh
+    - name: fonts-powerline
     - name: htop
     - name: bats
     - name: yadm
@@ -20,10 +21,10 @@
     - name: rsync
     - name: python3-pip
 
-- name: get oh-my-zsh
-  git:
-    repo: https://github.com/robbyrussell/oh-my-zsh.git
-    dest: ~/.oh-my-zsh
+#- name: get oh-my-zsh
+#  git:
+#    repo: https://github.com/robbyrussell/oh-my-zsh.git
+#    dest: ~/.oh-my-zsh
 
 - name: chagne defautl shell to zsh
   become: yes
@@ -45,6 +46,7 @@
     - ".vim"
     - ".vimrc"
     - ".zshrc"
+    - ".oh-my-zsh"
   register: copying
 
 - debug: var=copying.stdout_lines
@@ -66,12 +68,19 @@
   with_items:
     - name: build-essential
     - name: cmake
-    - name: python3-dev
-    - name: python-dev
+    - name: python3-all-dev
+    - name: python-all-dev
 
 # get build error, postpone it.
 - name: vim - set YouCompleteMe
-  shell: python3 ./install.py >> "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
+  shell: |
+        git clean -x -d -f
+        git fetch $(git remote)
+        git checkout $(git remote)/master
+        git submodule update --init --recursive
+        python3 ./install.py 2>&1 | tee "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
+  #shell: git clean -x -d -f && git pull && git submodule update --init --recursive && python3 ./install.py 2>&1 | tee "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
+  #shell: git pull && python3 ./install.py 2>&1 | tee "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
   args:
     chdir: "/home/{{ansible_ssh_user}}/.vim/bundle/YouCompleteMe"
 
