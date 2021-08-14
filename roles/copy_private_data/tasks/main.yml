@@ -93,3 +93,23 @@
     src: "{{lookup('env','HOME')}}/.ssh"
     dest: "{{lookup('env','HOME')}}/"
 
+- name: copy my-libraries
+  synchronize:
+    src: "{{lookup('env','HOME')}}/my-library"
+    dest: "{{lookup('env','HOME')}}/"
+
+# -------------------------------------------------------------
+# copy dotfiles
+# -------------------------------------------------------------
+- name: copy dotfiles
+  synchronize:
+    src: "{{lookup('env','HOME')}}/dotfiles"
+    dest: "{{lookup('env','HOME')}}/"
+
+- name: set env for dotfiles
+  shell: |
+        set -ex
+        alias dotfiles="git --git-dir=$HOME/dotfiles --work-tree=$HOME"
+        dotfiles config --local status.showUntrackedFiles no
+        dotfiles reset --hard HEAD
+

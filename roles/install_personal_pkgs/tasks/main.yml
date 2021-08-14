@@ -1,16 +1,72 @@
 ---
+# -----------------------------------------------------------------------------------------------------------------------------------
+# Set up ansible environment for snap module
+# -----------------------------------------------------------------------------------------------------------------------------------
+- name: add ansible ppa
+  become: yes
+  ansible.builtin.apt_repository:
+    repo: ppa:ansible/ansible
+
+- name: install ansible packages
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+        - ansible
+    state: present
+
+- name: Execute the command in remote shell; stdout goes to the specified file on the remote.
+  shell:
+    cmd: ansible-galaxy collection install community.general
+# -----------------------------------------------------------------------------------------------------------------------------------
+- name: Install personal snaps
+  become: yes
+  community.general.snap:
+    name:
+      - bpytop
+
+- name: Install personal snaps --classic
+  become: yes
+  community.general.snap:
+    classic: yes
+    name:
+      - code
+
+# -----------------------------------------------------------------------------------------------------------------------------------
+# Set up environment for mongodb client
+# -----------------------------------------------------------------------------------------------------------------------------------
+- name: Add an signing key for the ppa of mongosh
+  become: yes
+  ansible.builtin.apt_key:
+    url: https://www.mongodb.org/static/pgp/server-5.0.asc
+    state: present
+
+- name: Add mongosh repository for Focal
+  become: yes
+  ansible.builtin.apt_repository:
+    repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse
+    state: present
+    filename: mongosh
+
+- name: install mongosh packages
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+        - mongodb-mongosh
+    state: present
+
+# -----------------------------------------------------------------------------------------------------------------------------------
 - name: install personal packages
   become: yes
   apt:
     update_cache: yes
     name:
         - tlp
-        - chromium-browser
         - gdebi
         - flameshot
         - im-config
         - tree
-        - ansible
         - network-manager-openvpn-gnome
         - fcitx
         - fcitx-chewing
@@ -18,6 +74,11 @@
         - gparted
         - shellcheck
         - firefox
+        - virt-manager
+        - ovmf
+        - xclip
+        - tig
+        - meld
     state: present
 
 
@@ -33,11 +94,11 @@
 - name: install docker ce
   include_tasks: ubuntu-ansible-docker-install.yml
 
-- name: install basher
-  include_tasks: basher.yml
-
-- name: install basher packages
-  include_tasks: basher-pkgs.yml
+  #- name: install basher
+  #  include_tasks: basher.yml
+  #
+  #- name: install basher packages
+  #  include_tasks: basher-pkgs.yml
 
 - name: install language support for zh and set default ims as fcitx
   become: yes

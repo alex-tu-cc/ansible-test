@@ -9,6 +9,7 @@
 
   with_items:
     - name: git
+    - name: bzr
     - name: vim
     - name: exuberant-ctags
     - name: tmux
@@ -20,6 +21,9 @@
     - name: powertop
     - name: rsync
     - name: python3-pip
+    - name: devscripts
+    - name: equivs
+    - name: dh-modaliases
 
 #- name: get oh-my-zsh
 #  git:
@@ -59,26 +63,31 @@
 #  args:
 #    chdir: "{{lookup('env','HOME')}}/.vim/bundle/YCM-Generator"
 
-- name: vim - install YouCompleteMe dependencies
+- name: vim - install packages to compile YouCompleteMe
   become: yes
   apt:
-    update_cache: yes
-    name: '{{ item.name }}'
-    state: '{{ item.state | default("present") }}'
-  with_items:
-    - name: build-essential
-    - name: cmake
-    - name: python3-all-dev
-    - name: python-all-dev
+    name:
+        - build-essential
+        - cmake
+        - vim-nox
+        - python3-dev
+        - mono-complete
+        - golang
+        - nodejs
+        - default-jdk
+        - npm
+    state: present
+
 
 # get build error, postpone it.
 - name: vim - set YouCompleteMe
   shell: |
+        set -ex
         git clean -x -d -f
         git fetch $(git remote)
         git checkout $(git remote)/master
         git submodule update --init --recursive
-        python3 ./install.py 2>&1 | tee "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
+        python3 install.py --all| tee "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
   #shell: git clean -x -d -f && git pull && git submodule update --init --recursive && python3 ./install.py 2>&1 | tee "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
   #shell: git pull && python3 ./install.py 2>&1 | tee "/home/{{ansible_ssh_user}}/"/YouCompleteMe.log
   args:

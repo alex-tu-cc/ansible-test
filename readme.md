@@ -18,6 +18,11 @@ It should still works well if anyone replaced it by another.
 $ ansible-playbook --become --ask-become-pass sudo-set-no-pw.yml    
 ```
 
+* [TODO]Prepare environment on target machine. e.g. disable suspend.
+```
+$ ansible-playbook before-ansible-setup-work-pc.yml
+```
+
 * install base packages and personal favor packages.
 ```
 $ ansible-playbook alex-work-pc.yml
@@ -27,4 +32,9 @@ $ ansible-playbook alex-work-pc.yml
   * adjust local file permission then clone needed stuff to remote target; so password here is for local machine
 ```
 $ ansible-playbook alex-work-pc-projects-stuff.yml --ask-become-pass
+```
+
+* [TODO]Reset environment from target machine. e.g. re-enable suspend.
+```
+$ ansible-playbook after-ansible-setup-work-pc.yml
 ```

@@ -22,9 +22,12 @@
         update_cache: yes
         name:
         - davfs2
-        - lp-fish-tools
         - lftp
         - oathtool
+        - nfs-common
+        - zsync
+        - python3-lp-fish-tools
+        - oem-scripts
         state: present
 
     - name: copy projects stuff by root
@@ -35,18 +38,11 @@
       with_items:
         - "/etc/davfs2/secrets"
         - "/etc/davfs2/davfs2.conf"
+        - "/etc/docker/daemon.json"
 
     - name: copy projects stuff - prepare
       become: yes
       shell: chown "{{ansible_ssh_user}}":"{{ansible_ssh_user}}" /srv -R
-
-    - name: copy projects stuff
-      become: yes
-      synchronize:
-        src: "{{item}}"
-        dest: "{{item}}"
-      with_items:
-        - "/etc/docker/daemon.json"
 
     - name: Create folders
       file:
@@ -63,6 +59,7 @@
         - "/srv/git/"
         - "/srv/iso/base/"
         - "/srv/iso/ubuntu/"
+#        - "/home/{{ansible_ssh_user}}/.config/lp-fish-tools/config.ini"
 
 #  roles:
 #    - role: copy_private_data
